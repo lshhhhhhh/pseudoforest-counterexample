@@ -53,7 +53,7 @@ y|XMGMm?k@?A@P?t__p_??AEOGX??p@OSCs_O??EC??_??BO??CO_??_O??GC??u?_??C???GO???B??
 
 ## Attribution & AI disclosure
 
-Author: Shaoheng Lai (laishaoheng1996@gmail.com). This work was carried out in
+Author: Shaoheng Lai (shaohenglai.io@gmail.com). This work was carried out in
 close collaboration with an AI assistant (Anthropic Claude: Fable 5 / Opus 5),
 which proposed and executed the experimental programme, the construction, and
 proof drafts under the author's direction; an independent adversarial AI review
