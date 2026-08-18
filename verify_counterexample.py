@@ -40,8 +40,11 @@ def graph_from(adj):
     return G
 
 
-def feasible(T):
-    """SAT: exists orientation of T with min(d+,d-)<=1 at every vertex."""
+def feasible(T, check_model=False):
+    """SAT: exists orientation of T with min(d+,d-)<=1 at every vertex.
+    With check_model=True, additionally decode the returned model and
+    verify min(d+,d-)<=1 at every vertex by direct degree counting
+    (independent of the encoding)."""
     edges = sorted(tuple(sorted(e)) for e in T.edges())
     eidx = {e: i + 1 for i, e in enumerate(edges)}
     mE = len(edges)
@@ -60,7 +63,20 @@ def feasible(T):
         for a, b in combinations(ins, 2):
             cnf.append([wv, -a, -b])                   # else   -> indeg<=1
     with Cadical195(bootstrap_with=cnf) as s:
-        return s.solve()
+        if not s.solve():
+            return False
+        if not check_model:
+            return True
+        model = set(l for l in s.get_model() if l > 0)
+    dplus = {v: 0 for v in T.nodes()}
+    dminus = {v: 0 for v in T.nodes()}
+    for (a, b), i in eidx.items():
+        if i in model:
+            dplus[a] += 1; dminus[b] += 1
+        else:
+            dplus[b] += 1; dminus[a] += 1
+    assert all(min(dplus[v], dminus[v]) <= 1 for v in T.nodes()),         "model verification failed"
+    return True
 
 
 def hamiltonian(G):
@@ -142,9 +158,9 @@ def main():
     assert not hamiltonian(Gamma), "base graph IS Hamiltonian?!"
     print("3. 38-vertex base graph: cubic, non-Hamiltonian  OK")
 
-    # 4. positive control
-    assert feasible(nx.icosahedral_graph()), "control failed - encoder broken"
-    print("4. positive control (icosahedron): feasible  OK")
+    # 4. positive control (with direct model verification)
+    assert feasible(nx.icosahedral_graph(), check_model=True),         "control failed - encoder broken"
+    print("4. positive control (icosahedron): feasible, model degree-checked  OK")
 
     # 5. the verdict
     assert not feasible(T), "T* is feasible?! claim refuted"

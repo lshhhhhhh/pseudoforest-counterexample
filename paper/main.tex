@@ -68,7 +68,9 @@ $V(T)$ can be partitioned into two sets each inducing a pseudoforest. The
 two-\emph{forest} analogue fails: planar graphs have vertex arboricity at
 most $3$ \cite{CKW68}, and the bound is sharp \cite{CK69}; indeed a
 triangulation has vertex arboricity at most $2$ if and only if its dual is
-Hamiltonian \cite{Stein71,HS89}, so the dual of any non-Hamiltonian
+Hamiltonian \cite{Stein71,HS89} (for further vertex-arboricity
+results on planar graphs see \cite{RW08}), so the dual of any
+non-Hamiltonian
 $3$-connected cubic planar graph --- e.g.\ the $21$-vertex duals of the
 $38$-vertex graphs of \cite{HM88} --- is a triangulation needing three
 forests. Pseudoforests sit strictly between: a triangulation has $3n-6$
@@ -182,8 +184,9 @@ colours.
 \label{lem:sphere}
 $k$ pairwise disjoint simple closed curves cut $S^2$ into exactly $k+1$
 open connected regions; each curve lies on the boundary of exactly $2$
-regions; and the bipartite incidence graph (regions vs.\ curves) is a
-tree.
+regions; and the graph whose vertices are the regions and whose edges
+are the curves --- each curve joining the two regions flanking it ---
+is a tree.
 \end{lemma}
 
 \begin{proof}
@@ -194,15 +197,16 @@ a plane graph), so $\gamma$ has an annular collar inside $R$ meeting no
 curve; by the Jordan curve theorem $\gamma$ splits $S^2$ into two sides,
 and via the collar, $R\setminus\gamma$ has exactly two components, one on
 each side, each with $\gamma$ on its boundary; no other region is
-affected. Thus regions increase by one, and the incidence graph is the
-old one with the node $R$ split in two and joined through the new edge
+affected. Thus regions increase by one, and the region graph is the old
+one with the vertex $R$ split in two and joined through the new edge
 $\gamma$ (old subtrees attach to the side of $\gamma$ they lie in): it
 stays a tree.
 \end{proof}
 
-We call the tree of Lemma~\ref{lem:sphere} the \emph{nesting tree}. For a
-region $R$ let $b_R$ denote its number of boundary curves (its degree in
-the nesting tree).
+We call the tree of Lemma~\ref{lem:sphere} the \emph{nesting tree}: its
+vertices are the regions, its edges the curves. For a region $R$ let
+$b_R$ denote its number of boundary curves, i.e.\ its degree in the
+nesting tree.
 
 \begin{lemma}[regions are monochromatic components]\label{lem:bij}
 Every monochromatic component lies in exactly one region; this map is a
@@ -233,7 +237,8 @@ forces $\#\text{components}=k+1$ and the map is a bijection. Then $I$ is
 connected with $k+1$ nodes and $k$ edges: a tree. Finally the left
 endpoints of $C$ lie locally on the left of $C$, i.e.\ in the region
 flanking $C$ on that side, so $I$ maps onto the topological incidence
-tree node-by-node and edge-by-edge.
+tree vertex-by-vertex and edge-by-edge (in both graphs the vertices
+correspond to the regions and the edges to the curves).
 \end{proof}
 
 A dual vertex not lying on any curve (equivalently, a monochromatic
@@ -312,12 +317,14 @@ ends.
 
 \section{The construction}\label{sec:constr}
 
-Let $\Gamma$ be a Barnette--Bos\'ak--Lederberg graph: a non-Hamiltonian
-$3$-connected cubic planar graph on $38$ vertices. The minimum order of
-such graphs is $38$ and is attained by exactly six graphs \cite{HM88};
-they arise from the work of Barnette, of Bos\'ak \cite{Bosak67}, and of
-Lederberg in the mid-1960s, so $38$ is the order of the smallest
-counterexamples to Tait's conjecture \cite{Tait84,Tutte46,HM88}. We use
+Let $\Gamma$ be the Barnette--Bos\'ak--Lederberg graph: a
+non-Hamiltonian $3$-connected cubic planar graph on $38$ vertices,
+arising from the work of Barnette, of Bos\'ak \cite{Bosak67}, and of
+Lederberg in the mid-1960s. The minimum order of non-Hamiltonian
+$3$-connected cubic planar graphs is $38$ \cite{HM88} (the complete
+list of the six extremal graphs is determined in \cite{ABHM00}), so
+these are the smallest counterexamples to Tait's conjecture
+\cite{Tait84,Tutte46}. We use
 the copy archived as House of Graphs \#954 \cite{HoG}; its
 non-Hamiltonicity is also re-verified mechanically here
 (Section~\ref{sec:verif}). Fix any vertex $v_0$ of $\Gamma$ and let
@@ -380,8 +387,9 @@ verified mechanically.
 \noindent\textbf{Definition (the triangulation $T^{*}$).}
 $T^{*}:=D(G^{*})$, the planar dual of $G^{*}$. Since $G^{*}$ is a simple
 $3$-connected cubic planar graph on $112$ vertices with $168$ edges,
-$T^{*}$ is a planar triangulation with $58$ vertices and $168$ edges
-($m=3n-6$ holds), $3$-connected by Whitney. Adjacency lists and
+$T^{*}$ is a simple planar triangulation with $58$ vertices and $168$
+edges ($m=3n-6$ holds); being a simple maximal planar graph on more
+than $3$ vertices, it is automatically $3$-connected. Adjacency lists and
 \texttt{graph6} strings for both graphs are archived with the paper
 (\texttt{data/counterexample\_58.json}).
 
@@ -572,10 +580,10 @@ Hamiltonian path'' is in fact false (machine check: $454$ of $1893$
 deletion patterns are traversable); the argument survives because strays
 cannot pay for clean traversals --- their placement is blocked by
 \eqref{eq:star}, not by the fragment.
-(2) Within this scheme $58$ is optimal: a fragment forcing internal
-curves under all traversals must have non-Hamiltonian closure, and $38$
-is the minimum order of a non-Hamiltonian $3$-connected cubic planar
-graph \cite{HM88}.
+(2) Within the subclass of this scheme in which each fragment is
+$\Gamma'-v$ for a non-Hamiltonian $3$-connected cubic planar graph
+$\Gamma'$, the order $58$ is optimal, since $38$ is the minimum order
+of such a graph $\Gamma'$ \cite{HM88}.
 (3) The construction is the classical Tutte-fragment amplification
 pattern \cite{Tutte46}; the novelty is the accounting
 (Lemma~\ref{lem:rank}) that converts ``not Hamiltonian'' into ``no
@@ -584,10 +592,13 @@ pseudoforest $2$-partition''.
 
 \section{Verification}\label{sec:verif}
 
-All claims that admit finite checks were verified mechanically; the
-scripts and data are archived with the paper. An independent adversarial
-review pass re-ran or re-implemented every item below from the archived
-adjacency lists alone and confirmed them.
+All claims that admit finite checks were verified mechanically. We
+distinguish three kinds of evidence: (a) the mathematical proofs in the
+text; (b) checks that any reader can re-run from the archived scripts
+and data; and (c) internal cross-checks performed during the research
+(including an adversarial review pass with independently re-implemented
+encodings), reported as process information only. Everything below is
+of kind (b) unless stated otherwise.
 
 \begin{enumerate}
 \item \emph{$T^{*}$ infeasible}: two independent SAT encodings --- (a)
@@ -626,9 +637,15 @@ with $n\le 10$ ($15{,}348$ partitions, $20{,}044$ curves) and --- in the
 review pass --- on all $134{,}296$ $2$-colourings (valid or not) of all
 triangulations with $n\le 10$, with zero violations.
 \item \emph{Standalone verifier}: a self-contained script
-(\texttt{verify\_counterexample.py}) re-derives everything from the
-archived adjacency lists alone: structure checks, dual isomorphism,
-non-Hamiltonicity, a positive control, and the final UNSAT.
+(\texttt{verify\_counterexample.py}) performs, from the archived
+adjacency lists alone, exactly five checks: the structure of $G^{*}$
+($112$ vertices, cubic, planar, $3$-connected); the structure of
+$T^{*}$ ($58$-vertex simple planar triangulation isomorphic to
+$D(G^{*})$); non-Hamiltonicity of the base graph; a positive control
+(the icosahedron, including a direct degree check of a returned
+orientation); and infeasibility of $T^{*}$. It does not cover
+Theorem~B, whose audit package (per-order logs, exact commands, and a
+model-verifying sweep) is archived separately in the repository.
 \end{enumerate}
 
 \section{Positive results}\label{sec:positive}
@@ -666,14 +683,17 @@ $k\le 2$ cycles the nesting tree is a path on at most $3$ nodes and
 $w\equiv 0$, so \eqref{eq:star} holds.
 \end{proof}
 
-\paragraph{Data points.}
-For every dual of a triangulation on $n=14$ vertices ($339{,}722$ cubic
-graphs; over $4.8$ million non-path-nested $2$-factors), a strictly
-improving single alternating-cycle flip toward a path-nested $2$-factor
-exists (``no bad local minima'' of the potential
-$\Phi=\#\text{leaves}-2$ of the nesting tree), and likewise for all
-$n\le 13$; Theorem~A implies this landscape statement fails somewhere
-in $(14,58]$.
+\paragraph{A computational observation.}
+For a $2$-factor $F$ of a cubic graph with complementary perfect
+matching $M$, call $F\bigtriangleup Z$ a \emph{flip} of $F$ whenever
+$Z$ is a cycle alternating between $F$- and $M$-edges (so
+$F\bigtriangleup Z$ is again a $2$-factor). For every dual of a
+triangulation on $n\le 14$ vertices, every $2$-factor whose nesting
+tree is not a path admits a flip strictly decreasing the number of
+leaves of the nesting tree (checked exhaustively: at $n=14$ alone,
+$339{,}722$ graphs and over $4.8$ million such $2$-factors; logs in
+the repository). Theorem~A implies this ``no bad local minima''
+statement fails somewhere in $(14,58]$.
 
 \section{Open problems}
 
@@ -699,10 +719,10 @@ executed the experimental programme, the construction, and drafts of the
 proofs and text under the author's direction; a separate adversarial AI
 review pass re-derived the proofs and re-implemented all machine checks
 independently. All mathematical claims, references, and computational
-results have been verified by the methods described in
-Section~\ref{sec:verif}; the archived data and the standalone verifier
-allow anyone to repeat the verification without trusting any component
-of our pipeline. The AI system is not an author and bears no
+results have been verified by the methods described in Section~\ref{sec:verif}; the
+archived data and scripts allow anyone to repeat those checks without
+trusting our own pipeline (standard libraries and SAT solvers are, of
+course, still trusted). The AI system is not an author and bears no
 responsibility for the correctness of this paper, which rests with the
 human author.
 
@@ -733,6 +753,10 @@ vertex arboricity of a graph}, SIAM J. Discrete Math. \textbf{2} (1989),
 non-Hamiltonian 3-connected cubic planar graphs have 38 vertices},
 J. Combin. Theory Ser. B \textbf{45} (1988), 305--319.
 
+\bibitem{ABHM00} R.~E.~L.~Aldred, S.~Bau, D.~A.~Holton, B.~D.~McKay,
+\emph{Nonhamiltonian 3-connected cubic planar graphs}, SIAM J.
+Discrete Math. \textbf{13} (2000), 25--32.
+
 \bibitem{Bosak67} J.~Bos\'ak, \emph{Hamiltonian lines in cubic graphs},
 in: Theory of Graphs (Internat. Sympos., Rome, 1966), Gordon and Breach,
 New York; Dunod, Paris, 1967, 35--46.
@@ -756,8 +780,16 @@ Math. \textbf{325} (2023), 97--107. Graph \#954.
 
 \bibitem{pysat} A.~Ignatiev, A.~Morgado, J.~Marques-Silva,
 \emph{PySAT: A Python toolkit for prototyping with SAT oracles}, in:
-SAT 2018, LNCS 10929, Springer, 2018, 428--437. (Solvers used:
-CaDiCaL~1.9.5; Glucose~4.2.)
+SAT 2018, LNCS 10929, Springer, 2018, 428--437. (Solvers used through
+PySAT: CaDiCaL 1.9.5 \cite{cadical}; Glucose 4.2 \cite{glucose}.)
+
+\bibitem{cadical} A.~Biere, K.~Fazekas, M.~Fleury, M.~Heisinger,
+\emph{CaDiCaL, Kissat, Paracooba, Plingeling and Treengeling entering
+the SAT Competition 2020}, in: Proc.\ SAT Competition 2020, Univ.
+Helsinki, 2020, 51--53.
+
+\bibitem{glucose} G.~Audemard, L.~Simon, \emph{Predicting learnt
+clauses quality in modern SAT solvers}, in: IJCAI 2009, 399--404.
 
 \end{thebibliography}
 

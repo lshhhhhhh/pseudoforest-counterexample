@@ -26,9 +26,12 @@ python verify_counterexample.py
 ```
 
 Expected output ends with `ALL CHECKS PASSED - T* is a counterexample.`
-The verifier re-derives everything from the archived adjacency lists alone:
+The verifier performs five checks from the archived adjacency lists alone:
 structure of both graphs, T\* = dual(G\*), non-Hamiltonicity of the base graph,
-a positive control, and the final infeasibility (SAT, CaDiCaL). The claim was
+a positive control (with a direct degree check of a returned orientation), and
+the final infeasibility (SAT, CaDiCaL). Theorem B (all n <= 17 feasible) has a
+separate audit package under `verification/` (model-verifying sweep script,
+per-order logs, environment hashes). The claim was
 additionally confirmed by three independently written encodings under multiple
 solvers, positive/mechanism controls (0, 1, 2 BBL fragments → feasible; 3 → not),
 and an adversarial review pass.
@@ -54,8 +57,8 @@ Author: Shaoheng Lai (laishaoheng1996@gmail.com). This work was carried out in
 close collaboration with an AI assistant (Anthropic Claude: Fable 5 / Opus 5),
 which proposed and executed the experimental programme, the construction, and
 proof drafts under the author's direction; an independent adversarial AI review
-pass re-derived the proofs and re-implemented all machine checks. All claims
-are mechanically verifiable via the included verifier. The AI system is not an
+pass re-derived the proofs and re-implemented all machine checks. All claims are mechanically checkable via the included scripts (standard
+libraries and SAT solvers are still trusted). The AI system is not an
 author.
 
 ## License

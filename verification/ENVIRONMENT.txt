@@ -1,0 +1,24 @@
+Verification environment (recorded 2026-08-18)
+================================================
+OS: Windows 11 Home 10.0.26200 (x86_64)
+Python: Python 3.14.3
+networkx: 3.6.1
+python-sat: 1.9.dev15
+SAT solvers (via PySAT): CaDiCaL 1.9.5, Glucose 4.2
+plantri: version 5.5, compiled with MSYS2 gcc (CPUTIME=0 patch)
+plantri.exe SHA256: 7ce7d0f964416129eb1e32e6d5ba26f5a87b756812e7f61ef49131081758db6a
+TeX engine: Tectonic 0.17.0
+
+Theorem B audited sweep
+-----------------------
+Command (per order n, optionally sharded res/mod):
+    python scripts/theoremB_audit.py N [res/mod]
+Driver: scripts/run_theoremB_audit.sh  (n=4..13 sequential; n=14..17 in 14 shards)
+Each instance: SAT solve + model decoded + min(d+,d-)<=1 re-checked by
+direct degree counting. Per-order/per-shard logs: verification/theoremB/.
+Counts asserted against OEIS A000109.
+
+Flip-landscape observation (Section 6 of the paper)
+---------------------------------------------------
+Logs: verification/flip_landscape/ (localmin_12/13 = full n=12/13;
+shard_*.log = n=14 in 14 plantri res/mod shards).
