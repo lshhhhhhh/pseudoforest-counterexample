@@ -6,17 +6,24 @@ the returned SAT model directly: decode the orientation and check
 min(d+, d-) <= 1 at every vertex by plain degree counting (independent of
 the encoding's correctness).
 
-Audit properties addressed (review items M2.1-M2.4):
+Audit properties:
   - every plantri output line must parse; a malformed line raises;
   - the plantri process exit code is checked;
   - per-instance model verification (not just the solver's boolean);
-  - per-order (and per-shard) counts are logged and asserted against
-    OEIS A000109 by the aggregator.
+  - the run FAILS (nonzero exit) if any instance is infeasible;
+  - per-order (and per-shard) counts are logged; full-order counts are
+    asserted against OEIS A000109 here, sharded counts by the aggregator
+    (theoremB_aggregate.py).
 
-Usage:  python theoremB_audit.py N [res/mod]
+plantri location: set the PLANTRI environment variable or pass
+--plantri PATH (plantri 5.5, https://users.cecs.anu.edu.au/~bdm/plantri/;
+see verification/ENVIRONMENT.txt for the exact version, source patch and
+build command used by the authors).
+
+Usage:  python theoremB_audit.py N [res/mod] [--plantri PATH]
 Writes: verification/theoremB/n{N}[_s{res}of{mod}].log
 """
-import hashlib
+import os
 import subprocess
 import sys
 import time
@@ -25,7 +32,25 @@ from pathlib import Path
 
 from pysat.solvers import Cadical195
 
-PLANTRI = r"E:\math\vendor\plantri55\plantri.exe"
+
+def _find_plantri():
+    argv = sys.argv
+    for i, a in enumerate(argv):
+        if a == "--plantri" and i + 1 < len(argv):
+            path = argv[i + 1]
+            del argv[i:i + 2]
+            return path
+    path = os.environ.get("PLANTRI")
+    if path:
+        return path
+    default = r"E:\math\vendor\plantri55\plantri.exe"
+    if Path(default).exists():
+        return default
+    sys.exit("error: plantri not found. Set the PLANTRI environment "
+             "variable or pass --plantri PATH.")
+
+
+PLANTRI = _find_plantri()
 HERE = Path(__file__).resolve().parent.parent
 OUTDIR = HERE / "verification" / "theoremB"
 
@@ -116,6 +141,10 @@ def main():
            f"model_verified={feasible} time={dt:.1f}s")
     (OUTDIR / f"{tag}.log").write_text(msg + "\n", encoding="utf-8")
     print(msg)
+    if feasible != total:
+        raise AssertionError(
+            f"THEOREM B FAILS on {total - feasible} instance(s) at n={n} "
+            f"shard={shard} -- see COUNTEREXAMPLE CANDIDATE lines above")
     if not shard and total != A000109[n]:
         raise AssertionError(f"count mismatch vs A000109: {total} != {A000109[n]}")
 
