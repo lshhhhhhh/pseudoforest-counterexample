@@ -36,3 +36,17 @@ n=15 shard=7/14 total=172510 feasible=172510 model_verified=172510 time=188.1s
 n=15 shard=10/14 total=173318 feasible=173318 model_verified=173318 time=189.4s
 n=15 shard=13/14 total=172871 feasible=172871 model_verified=172871 time=189.6s
 n=15 shard=11/14 total=173446 feasible=173446 model_verified=173446 time=190.3s
+n=16 shard=13/14 total=1249193 feasible=1249193 model_verified=1249193 time=1337.5s
+n=16 shard=6/14 total=1249419 feasible=1249419 model_verified=1249419 time=1339.2s
+n=16 shard=3/14 total=1247371 feasible=1247371 model_verified=1247371 time=1339.7s
+n=16 shard=1/14 total=1246987 feasible=1246987 model_verified=1246987 time=1341.1s
+n=16 shard=7/14 total=1249593 feasible=1249593 model_verified=1249593 time=1342.7s
+n=16 shard=0/14 total=1246809 feasible=1246809 model_verified=1246809 time=1344.6s
+n=16 shard=11/14 total=1249638 feasible=1249638 model_verified=1249638 time=1344.9s
+n=16 shard=2/14 total=1248795 feasible=1248795 model_verified=1248795 time=1345.6s
+n=16 shard=8/14 total=1251375 feasible=1251375 model_verified=1251375 time=1347.6s
+n=16 shard=9/14 total=1251309 feasible=1251309 model_verified=1251309 time=1348.3s
+n=16 shard=5/14 total=1250872 feasible=1250872 model_verified=1250872 time=1348.5s
+n=16 shard=10/14 total=1250378 feasible=1250378 model_verified=1250378 time=1348.3s
+n=16 shard=12/14 total=1249630 feasible=1249630 model_verified=1249630 time=1351.6s
+n=16 shard=4/14 total=1248872 feasible=1248872 model_verified=1248872 time=1353.6s
