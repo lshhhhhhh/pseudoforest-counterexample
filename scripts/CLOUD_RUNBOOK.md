@@ -22,10 +22,17 @@ export PLANTRI="$PWD/plantri55/plantri"
 
 ## Run
 
+Orders n = 4..16 are already audited and archived in the repository
+(all feasible, all models degree-verified, totals matching A000109), so
+**only n = 17 remains**:
+
 ```bash
 export SHARDS=$(nproc)          # capped at 16 by the driver; edit if desired
-bash scripts/run_theoremB_audit.sh
+N_FROM=17 N_TO=17 bash scripts/run_theoremB_audit.sh
 ```
+
+(A full rerun `bash scripts/run_theoremB_audit.sh` also works and takes
+only ~20 extra minutes; the aggregator checks the union either way.)
 
 The driver writes per-order/per-shard logs plus an environment stamp to
 `verification/theoremB/`, fails fast on any anomaly, and ends by running
